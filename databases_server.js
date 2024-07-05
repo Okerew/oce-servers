@@ -6,32 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json()); 
 
-app.post('/test-connection', async (req, res) => {
-  const { host, user, password, database, port } = req.body;
-
-  const pool = new Pool({
-    host,
-    user,
-    password,
-    database,
-    port,
-    max: 1, 
-    idleTimeoutMillis: 10000, 
-    connectionTimeoutMillis: 10000, // return an error after 10 seconds if connection could not be established
-  });
-
-  try {
-    const client = await pool.connect();
-    client.release();
-    res.json({ message: 'Connection successful!' });
-  } catch (error) {
-    console.error('Error in /test-connection:', error.message);
-    res.status(500).json({ error: error.message });
-  } finally {
-    await pool.end();
-  }
-});
-
 app.post('/execute-sql', async (req, res) => {
   const { host, user, password, database, port, query } = req.body;
 
