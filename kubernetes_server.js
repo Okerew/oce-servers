@@ -5,6 +5,10 @@ const yaml = require('js-yaml');
 const app = express();
 app.use(express.json());
 
+// Uncoment this if you are using it on a seperate server
+// const cors = require('cors');
+// app.use(cors())
+
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 
